@@ -22,10 +22,12 @@ using namespace std;
 class Ann{
 public:
 	std::vector<int> structure;
-	std::vector< std::vector<long double> > weightTable;
+	std::vector< std::vector<long double> > *weightTable;
 	std::vector<std::vector<long double> > output;
 	std::vector<std::vector<long double> >error;
 	std::vector<std::vector< int> > node;
+
+
 
 	std::vector< std::vector<long double> > train_inputTable;
 	std::vector< std::vector<long double> > test_inputTable;
@@ -49,7 +51,7 @@ public:
 
 
 	void initStructure(char *);
-	void initweightTable(char *);
+	void initweight_Table(char *);
 	void initOutput();
 	void initError();
 	void initNode();

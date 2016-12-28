@@ -243,7 +243,7 @@ void Ann::initTestOutput(char * filename){
 
 }
 
-void Ann::initweightTable(char * filename){
+void Ann::initweight_Table(char * filename){
 
 	int nodes = 1;
 	fstream inFile;   // input file
@@ -251,7 +251,7 @@ void Ann::initweightTable(char * filename){
 	for(unsigned i=0;i<structure.size();i++){
 		nodes += structure[i];
 	}
-	weightTable = vector<vector<long double> > (nodes, vector<long double>(nodes, 0) );
+	weightTable = new vector<vector<long double> > (nodes, vector<long double>(nodes, 0) );
 
 	inFile.open(filename);
 	if (!inFile)
@@ -278,16 +278,16 @@ void Ann::initweightTable(char * filename){
 				wt = (long double) irand / 100.0;
 				//cout<<"rand wt : "<<wt;
 				//inFile>>z;
-				weightTable[node[j][i]][node[j+1][k]] = ( (long double) irand / 100.0 );// z;
-				//cout<<"setting weightTable ["<<node[j][i]<<"]["<<node[j+1][k]<<"] as : "<< weightTable[node[j][i]][node[j+1][k]] <<endl;//weightTable[node[j][i]][node[j+1][k]]<<endl;
+				(*weightTable)[node[j][i]][node[j+1][k]] = ( (long double) irand / 100.0 );// z;
+				//cout<<"setting (*weightTable) ["<<node[j][i]<<"]["<<node[j+1][k]<<"] as : "<< (*weightTable)[node[j][i]][node[j+1][k]] <<endl;//(*weightTable)[node[j][i]][node[j+1][k]]<<endl;
 			}
 		}
 	}
 
 	for(int j=1; j<structure.size();j++){
 		for(int i=0;i<structure[j];i++){
-			//cout<<"initializing weightTable ["<<0<<"]["<<node[j][i]<<"] as : "<<0.01<<endl;
-			weightTable[0][node[j][i]] = 0.01;  // weights from dummy to all nodes is 0.01
+			//cout<<"initializing (*weightTable) ["<<0<<"]["<<node[j][i]<<"] as : "<<0.01<<endl;
+			(*weightTable)[0][node[j][i]] = 0.01;  // weights from dummy to all nodes is 0.01
 		}
 	}
 }
@@ -351,12 +351,12 @@ void Ann::initNode(){
 
 void Ann::calculateValueAt(int layer, int nodeNum){
 
-	long double value = weightTable[0][node[layer][nodeNum]];
+	long double value = (*weightTable)[0][node[layer][nodeNum]];
 	int input_node = 0;
 
 	for(int i=0;i < output[layer-1].size();i++ ){
 		input_node = node[layer-1][i];
-		value += output[layer-1][i]* weightTable[input_node][node[layer][nodeNum]];
+		value += output[layer-1][i]* (*weightTable)[input_node][node[layer][nodeNum]];
 	}
 
 
@@ -377,7 +377,7 @@ void Ann::calculateErrorAt(int layer, int nodeNum){
 		input_node = node[layer][nodeNum];
 
 
-		errorV += error[layer+1][i] *  weightTable[input_node][node[layer+1][i]];
+		errorV += error[layer+1][i] *  (*weightTable)[input_node][node[layer+1][i]];
 	}
 
 	error[layer][nodeNum] = getSigmoidError(calculatedValue , errorV);
@@ -418,8 +418,8 @@ void Ann::updateWeights(){
 		for(int i=0;i<structure[j];i++){
 
 			//cout<<"current node : "<<node[j][i]<<endl;
-			weightTable[0][node[j][i]] =  weightTable[0][node[j][i]] + alpha * 1 * error[j][i] ;
-			//cout<<"setting  ["<<0<<"]["<<node[j][i]<<"] as : "<<weightTable[0][node[j][i]]<<endl;
+			(*weightTable)[0][node[j][i]] =  (*weightTable)[0][node[j][i]] + alpha * 1 * error[j][i] ;
+			//cout<<"setting  ["<<0<<"]["<<node[j][i]<<"] as : "<<(*weightTable)[0][node[j][i]]<<endl;
 		}
 	}
 
@@ -429,9 +429,9 @@ void Ann::updateWeights(){
 
 			for(int k=0; k< structure[j+1]; k++){
 
-				weightTable[node[j][i]][node[j+1][k]] =  weightTable[node[j][i]][node[j+1][k]] + alpha * output[j][i] * error[j+1][k] ;
+				(*weightTable)[node[j][i]][node[j+1][k]] =  (*weightTable)[node[j][i]][node[j+1][k]] + alpha * output[j][i] * error[j+1][k] ;
 
-				//cout<<"setting  ["<<node[j][i]<<"]["<<node[j+1][k]<<"] as : "<<weightTable[node[j][i]][node[j+1][k]]<<endl;
+				//cout<<"setting  ["<<node[j][i]<<"]["<<node[j+1][k]<<"] as : "<<(*weightTable)[node[j][i]][node[j+1][k]]<<endl;
 			}
 		}
 	}
@@ -496,6 +496,7 @@ void Ann::trainWeightsModel(int iteration_count){
 
 Ann::Ann(){
 
+
 	alpha= 0.01;
 	initStructure("structure.txt");
 	initDigitEncoding();
@@ -503,13 +504,14 @@ Ann::Ann(){
 	initOutput();
 	initError();
 
+
 	//showNode();
 
 	initTrainInput("train_input.txt");
 	initTrainOutput("train_output.txt");
 	initTestInput("test_input.txt");
 	initTestOutput("test_output.txt");
-	initweightTable("weights.txt");
+	initweight_Table("weights.txt");
 
 
 	cout<<"Sizes : "<<train_inputTable.size()<<" : "<<train_output.size() <<" : "<< test_inputTable.size() <<" : "<<test_output.size()<<endl;
@@ -590,7 +592,7 @@ Ann::Ann(  char * train_input_file, char *train_output_file, char * test_input_f
 	initTrainOutput("train-output.txt");
 	initTestInput("test-input.txt");
 	initTestOutput("test-output.txt");
-	initweightTable("weights.txt");
+	initweight_Table("weights.txt");
 
 }
 
@@ -633,9 +635,9 @@ void Ann::showNode(){
 
 void Ann::showWeight(){
 	std::cout<<"Weight matrix"<<std::endl;
-	for(unsigned i=0;i<weightTable.size();i++){
-		for(unsigned j=0;j<weightTable[i].size();j++){
-			std::cout<<weightTable[i][j]<<" ";
+	for(unsigned i=0;i<(*weightTable).size();i++){
+		for(unsigned j=0;j<(*weightTable)[i].size();j++){
+			std::cout<<(*weightTable)[i][j]<<" ";
 		}
 		std::cout<<std::endl;
 	}
