@@ -9,7 +9,7 @@
 #define ANN_H_
 
 #include<vector>
-#include"matrix.h"
+#include"type_defs.h"
 #include<iostream>
 #include<math.h>
 #include<iomanip>
@@ -19,35 +19,37 @@
 #include<time.h>
 using namespace std;
 
+
+
 class Ann{
 public:
 	std::vector<int> structure;
-	std::vector< std::vector<long double> > *weightTable;
-	std::vector<std::vector<long double> > *outputTable;
-	std::vector<std::vector<long double> > *errorTable;
+	std::vector< std::vector<float_data_type> > *weightTable;
+	std::vector<std::vector<float_data_type> > *outputTable;
+	std::vector<std::vector<float_data_type> > *errorTable;
 	std::vector<std::vector< int> > node;
 
 
 
-	std::vector< std::vector<long double> > train_inputTable;
-	std::vector< std::vector<long double> > test_inputTable;
+	std::vector< std::vector<float_data_type> > train_inputTable;
+	std::vector< std::vector<float_data_type> > test_inputTable;
 
 	std::vector< int> train_output;
 	std::vector< int> test_output;
 
-	long double alpha;
-	std::vector<std::vector<long double> > digit_encoding;
+	float_data_type alpha;
+	std::vector<std::vector<float_data_type> > digit_encoding;
 
-	long double getEuclideanDistance(long double x1, long double y1, long double x2, long double y2);
-	long double getEuclideanDistance(std::vector<long double> X, std::vector<long double> Y);
+	float_data_type getEuclideanDistance(float_data_type x1, float_data_type y1, float_data_type x2, float_data_type y2);
+	float_data_type getEuclideanDistance(std::vector<float_data_type> X, std::vector<float_data_type> Y);
 
-	long double getFSigmoid(long double in);
+	float_data_type getFSigmoid(float_data_type in);
 
-	long double getSigmoid(long double in);
-	long double getSigmoidError(long double out, long double error);
+	float_data_type getSigmoid(float_data_type in);
+	float_data_type getSigmoidError(float_data_type out, float_data_type error);
 
-	long double getRectifier(long double in);
-	long double getRectifierError(long double out);
+	float_data_type getRectifier(float_data_type in);
+	float_data_type getRectifierError(float_data_type out);
 
 
 	void initStructure(char *);
@@ -64,10 +66,10 @@ public:
 
 	virtual void calculateValueAt(int layer, int nodeNum);
 	virtual void calculateErrorAt(int layer, int nodeNum);
-	virtual void calculateErrorAtOutputLayer(int layer, int nodeNum, long double output);
+	virtual void calculateErrorAtOutputLayer(int layer, int nodeNum, float_data_type output);
 	void updateValuesInForwardPass();
 	void updateErrorsInBackwardPass();
-	void doForwardPassIteration(std::vector< std::vector<long double> > ,int);
+	void doForwardPassIteration(std::vector< std::vector<float_data_type> > ,int);
 	void doBackwardPassIteration(std::vector< int> , int);
 	virtual void updateWeights();
 	int findDigit();

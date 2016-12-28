@@ -16,11 +16,11 @@ using namespace std;
 
 
 
-long double Ann::getEuclideanDistance(vector<long double> X, vector<long double> Y)
+float_data_type Ann::getEuclideanDistance(vector<float_data_type> X, vector<float_data_type> Y)
 {
-	long double X_test, Y_test;
-	long double squareddist = 0.0;
-	long double result=0.0;
+	float_data_type X_test, Y_test;
+	float_data_type squareddist = 0.0;
+	float_data_type result=0.0;
 	for(unsigned i=0; i<X.size();i++){
 		X_test = X[i];
 		Y_test = Y[i];
@@ -31,11 +31,11 @@ long double Ann::getEuclideanDistance(vector<long double> X, vector<long double>
 }
 
 int Ann::findDigit(){
-	long double minDistance = -1;
+	float_data_type minDistance = -1;
 	int minDigit = -1;
-	long double tempDistance = 0.0;
-	std::vector<long double> X;
-	std::vector<long double> Y;
+	float_data_type tempDistance = 0.0;
+	std::vector<float_data_type> X;
+	std::vector<float_data_type> Y;
 
 
 	for(int i=0; i < structure[structure.size() -1]; i++){
@@ -61,31 +61,31 @@ int Ann::findDigit(){
 	return minDigit;
 }
 
-long double Ann::getSigmoid(long double in){
-	long double exp_value;
-	long double return_value;
+float_data_type Ann::getSigmoid(float_data_type in){
+	float_data_type exp_value;
+	float_data_type return_value;
 	exp_value = exp(-in);
-	return_value = ((long double)1) / (1 + exp_value);
+	return_value = ((float_data_type)1) / (1 + exp_value);
 	 return return_value;
 }
 
-long double Ann::getFSigmoid(long double in){
-	long double exp_value;
-	long double return_value;
+float_data_type Ann::getFSigmoid(float_data_type in){
+	float_data_type exp_value;
+	float_data_type return_value;
 	exp_value = abs(in);
-	return_value = ((long double)in) / (1 + exp_value);
+	return_value = ((float_data_type)in) / (1 + exp_value);
 	 return return_value;
 }
 
-long double Ann::getSigmoidError(long double out, long double error){
+float_data_type Ann::getSigmoidError(float_data_type out, float_data_type error){
 	return out * (1-out) * error;
 
 }
 
-long double Ann::getRectifier(long double in){
+float_data_type Ann::getRectifier(float_data_type in){
 	return in==0 ? (0.01 * in ): in;
 }
-long double Ann::getRectifierError(long double in){
+float_data_type Ann::getRectifierError(float_data_type in){
 		return in==0 ? 0.01: 1;
 	}
 
@@ -118,9 +118,9 @@ void Ann::initStructure(char * filename){
 
 void Ann::initTrainInput(char * filename){
 
-	vector<long double> temp;
+	vector<float_data_type> temp;
 	fstream inFile;   // input file
-	long double z;
+	float_data_type z;
 
 	inFile.open(filename);
 	if (!inFile)
@@ -181,9 +181,9 @@ void Ann::initTrainOutput(char * filename){
 }
 
 void Ann::initTestInput(char * filename){
-	vector<long double> temp;
+	vector<float_data_type> temp;
 	fstream inFile;   // input file
-	long double z;
+	float_data_type z;
 
 	inFile.open(filename);
 	if (!inFile)
@@ -247,11 +247,11 @@ void Ann::initweight_Table(char * filename){
 
 	int nodes = 1;
 	fstream inFile;   // input file
-	long double z;
+	float_data_type z;
 	for(unsigned i=0;i<structure.size();i++){
 		nodes += structure[i];
 	}
-	weightTable = new vector<vector<long double> > (nodes, vector<long double>(nodes, 0) );
+	weightTable = new vector<vector<float_data_type> > (nodes, vector<float_data_type>(nodes, 0) );
 
 	inFile.open(filename);
 	if (!inFile)
@@ -260,13 +260,13 @@ void Ann::initweight_Table(char * filename){
 	}
 
 	int irand;
-	long double wt;
+	float_data_type wt;
 
 	srand(time(NULL));
 
 	irand = (rand() % 20) -10 ;
 
-	wt = (long double) irand / 1.0;
+	wt = (float_data_type) irand / 1.0;
 	cout<<"rand wt : "<<wt;
 
 
@@ -275,10 +275,10 @@ void Ann::initweight_Table(char * filename){
 			for(int k=0; k< structure[j+1]; k++){
 				irand = (rand() % 20) -10 ;
 
-				wt = (long double) irand / 100.0;
+				wt = (float_data_type) irand / 100.0;
 				//cout<<"rand wt : "<<wt;
 				//inFile>>z;
-				(*weightTable)[node[j][i]][node[j+1][k]] = ( (long double) irand / 100.0 );// z;
+				(*weightTable)[node[j][i]][node[j+1][k]] = ( (float_data_type) irand / 100.0 );// z;
 				//cout<<"setting (*weightTable) ["<<node[j][i]<<"]["<<node[j+1][k]<<"] as : "<< (*weightTable)[node[j][i]][node[j+1][k]] <<endl;//(*weightTable)[node[j][i]][node[j+1][k]]<<endl;
 			}
 		}
@@ -293,18 +293,18 @@ void Ann::initweight_Table(char * filename){
 }
 
 void Ann::initOutput(){
-	outputTable = new vector<vector<long double> > ();
+	outputTable = new vector<vector<float_data_type> > ();
 	std::vector <int > :: iterator struct_iter;
 
 	for(struct_iter=structure.begin();struct_iter!=structure.end();struct_iter++){
-		(*outputTable).push_back(vector<long double>(*(struct_iter), 0));
+		(*outputTable).push_back(vector<float_data_type>(*(struct_iter), 0));
 	}
 
 }
 
 void Ann::initDigitEncoding(){
 
-	std::vector<std::vector<long double> > out(10, std::vector<long double>(10, 0.9));
+	std::vector<std::vector<float_data_type> > out(10, std::vector<float_data_type>(10, 0.9));
 	std::vector <int > :: iterator struct_iter;
 
 	for(int i=0;i<10;i++){
@@ -324,11 +324,11 @@ void Ann::initDigitEncoding(){
 
 void Ann::initError(){
 
-	errorTable = new vector<vector<long double> > ();
+	errorTable = new vector<vector<float_data_type> > ();
 	std::vector <int > :: iterator struct_iter;
 
 	for(struct_iter=structure.begin();struct_iter!=structure.end();struct_iter++){
-		(*errorTable).push_back(vector<long double>(*(struct_iter), 0));
+		(*errorTable).push_back(vector<float_data_type>(*(struct_iter), 0));
 	}
 }
 
@@ -350,7 +350,7 @@ void Ann::initNode(){
 
 void Ann::calculateValueAt(int layer, int nodeNum){
 
-	long double value = (*weightTable)[0][node[layer][nodeNum]];
+	float_data_type value = (*weightTable)[0][node[layer][nodeNum]];
 	int input_node = 0;
 
 	for(int i=0;i < (*outputTable)[layer-1].size();i++ ){
@@ -368,8 +368,8 @@ void Ann::calculateValueAt(int layer, int nodeNum){
 void Ann::calculateErrorAt(int layer, int nodeNum){
 
 	int input_node = 0;
-	long double calculatedValue = (*outputTable)[layer][nodeNum];
-	long double errorV = 0.0;
+	float_data_type calculatedValue = (*outputTable)[layer][nodeNum];
+	float_data_type errorV = 0.0;
 
 	for(int i=0;i < (*outputTable)[layer+1].size();i++ ){
 		//matError.set(0,i, error[layer+1][i]);
@@ -384,9 +384,9 @@ void Ann::calculateErrorAt(int layer, int nodeNum){
 	//error[layer][nodeNum] = getRectifierError(errorV);
 }
 
-void Ann::calculateErrorAtOutputLayer(int layer, int nodeNum, long double outputLayerValue){
+void Ann::calculateErrorAtOutputLayer(int layer, int nodeNum, float_data_type outputLayerValue){
 
-	long double calculatedValue = (*outputTable)[layer][nodeNum];
+	float_data_type calculatedValue = (*outputTable)[layer][nodeNum];
 	(*errorTable)[layer][nodeNum] =  getSigmoidError(calculatedValue, outputLayerValue - calculatedValue );
 }
 
@@ -437,7 +437,7 @@ void Ann::updateWeights(){
 
 }
 
-void Ann::doForwardPassIteration(std::vector< std::vector<long double> > inputlayer, int number){
+void Ann::doForwardPassIteration(std::vector< std::vector<float_data_type> > inputlayer, int number){
 
 	for(int j=0; j<structure[0];j++){
 		(*outputTable)[0][j] = inputlayer[number][j];
@@ -459,7 +459,7 @@ void Ann::doBackwardPassIteration(std::vector< int> outputlayer,int number){
 void Ann::validateTestInput(){
 	int total_tests = test_inputTable.size(), digit = -1;
 	int correctly_validated = 0;
-	long double accuracy = 0.0;
+	float_data_type accuracy = 0.0;
 	for(int i=0;i<total_tests;i++){
 		doForwardPassIteration(test_inputTable,i);
 		digit = findDigit();
@@ -469,7 +469,7 @@ void Ann::validateTestInput(){
 			correctly_validated++;
 		}
 	}
-	accuracy = ((long double) correctly_validated  )/ total_tests;
+	accuracy = ((float_data_type) correctly_validated  )/ total_tests;
 
 	cout<<"total : "<<total_tests<<" validated : "<<correctly_validated<<endl;
 	cout<<"accuracy : ";
