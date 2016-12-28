@@ -23,8 +23,8 @@ class Ann{
 public:
 	std::vector<int> structure;
 	std::vector< std::vector<long double> > *weightTable;
-	std::vector<std::vector<long double> > output;
-	std::vector<std::vector<long double> >error;
+	std::vector<std::vector<long double> > *outputTable;
+	std::vector<std::vector<long double> > *errorTable;
 	std::vector<std::vector< int> > node;
 
 
