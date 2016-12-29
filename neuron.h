@@ -26,6 +26,14 @@ public:
 	
 	void doForwardPass(int nodeNum);
 	void doBackwardPass(int nodeNum, boolean isOuputLayer, float_data_type OutputValue);
+	
+	virtual void processInput();
+	virtual void applyActivation();
+	virtual void updateOutput();
+
+	virtual void processError();
+	virtual void applyActivationError();
+	virtual void updateError();
 };
 
 #endif /* NEURON_H_ */
