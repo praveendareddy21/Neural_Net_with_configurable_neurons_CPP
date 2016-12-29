@@ -11,13 +11,8 @@ Neuron::Neuron(){
 
 }
 
-
-
-void Neuron::doForwardPass(std::vector<std::vector< int> > node, std::vector< std::vector<float_data_type> > *weightTable,
-		std::vector<std::vector<float_data_type> > *output_, int layer, int nodeNum){
-
+void Neuron::doForwardPass(int nodeNum){
 }
-void Neuron::doBackwardPass(std::vector<std::vector< int> > node, std::vector< std::vector<float_data_type> > *weightTable,
-		std::vector<std::vector<float_data_type> > *error_ ,int layer, int nodeNum){
-
+		
+void Neuron::doBackwardPass(int nodeNum, boolean isOuputLayer, float_data_type OutputValue){
 }
