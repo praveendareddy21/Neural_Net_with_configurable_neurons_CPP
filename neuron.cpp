@@ -96,3 +96,11 @@ float_data_type Neuron::applyActivationError(float_data_type out, float_data_typ
 void Neuron::updateError(int nodeNum, float_data_type activated_error){
 	(*error)[layer][nodeNum] = activated_error;
 }
+
+
+
+
+SigmoidNeuron::SigmoidNeuron(vector<vector< float_data_type> > *w , vector<vector< float_data_type> > *e,
+		 vector<vector< float_data_type> > *o , vector<vector< int> > *n , int l): Neuron(w, e, o, n, l){
+
+}

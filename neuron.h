@@ -42,5 +42,12 @@ public:
 
 };
 
+class SigmoidNeuron: public Neuron{
+public:
+	SigmoidNeuron(vector<vector< float_data_type> > *w , vector<vector< float_data_type> > *e,
+	 vector<vector< float_data_type> > *o , vector<vector< int> > *n , int l);
+};
+
+
 #endif /* NEURON_H_ */
 

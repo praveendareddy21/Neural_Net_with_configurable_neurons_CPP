@@ -352,7 +352,7 @@ void Ann::initNode(){
 
 void Ann::calculateValueAt(int layer, int nodeNum){
 
-	Neuron n(weightTable, errorTable, outputTable, Node_, layer);
+	SigmoidNeuron n(weightTable, errorTable, outputTable, Node_, layer);
 	n.doForwardPass(nodeNum);
 	/*
 	float_data_type value = (*weightTable)[0][(*Node_)[layer][nodeNum]];
@@ -373,7 +373,7 @@ void Ann::calculateValueAt(int layer, int nodeNum){
 
 void Ann::calculateErrorAt(int layer, int nodeNum){
 
-	Neuron n(weightTable, errorTable, outputTable, Node_, layer);
+	SigmoidNeuron n(weightTable, errorTable, outputTable, Node_, layer);
 	n.doBackwardPass(nodeNum, false, 0);
 
 	/*
@@ -398,7 +398,7 @@ void Ann::calculateErrorAt(int layer, int nodeNum){
 
 void Ann::calculateErrorAtOutputLayer(int layer, int nodeNum, float_data_type outputLayerValue){
 
-	Neuron n(weightTable, errorTable, outputTable, Node_, layer);
+	SigmoidNeuron n(weightTable, errorTable, outputTable, Node_, layer);
 	n.doBackwardPass(nodeNum, true, outputLayerValue);
 
 	//float_data_type calculatedValue = (*outputTable)[layer][nodeNum];
