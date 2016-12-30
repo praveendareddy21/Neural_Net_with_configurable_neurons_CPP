@@ -15,6 +15,10 @@ float_data_type getSigmoid_(float_data_type in){
 	return_value = ((float_data_type)1) / (1 + exp_value);
 	 return return_value;
 }
+float_data_type getSigmoidError_(float_data_type out, float_data_type error){
+	return out * (1-out) * error;
+
+}
 
 
 Neuron::Neuron(){
@@ -47,4 +51,26 @@ void Neuron::doForwardPass(int nodeNum){
 }
 		
 void Neuron::doBackwardPass(int nodeNum, bool isOuputLayer, float_data_type OutputValue){
+	if(isOuputLayer){
+		float_data_type calculatedValue = (*output)[layer][nodeNum];
+			(*error)[layer][nodeNum] =  getSigmoidError_(calculatedValue, OutputValue - calculatedValue );
+
+	}
+	else{
+
+		int input_node = 0;
+		float_data_type calculatedValue = (*output)[layer][nodeNum];
+		float_data_type errorV = 0.0;
+
+		for(int i=0;i < (*output)[layer+1].size();i++ ){
+			//matError.set(0,i, error[layer+1][i]);
+			input_node = (*Node_)[layer][nodeNum];
+
+
+			errorV += (*error)[layer+1][i] *  (*weightTable)[input_node][(*Node_)[layer+1][i]];
+		}
+
+		(*error)[layer][nodeNum] = getSigmoidError_(calculatedValue , errorV);
+
+	}
 }

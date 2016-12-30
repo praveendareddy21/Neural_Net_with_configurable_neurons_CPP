@@ -373,6 +373,10 @@ void Ann::calculateValueAt(int layer, int nodeNum){
 
 void Ann::calculateErrorAt(int layer, int nodeNum){
 
+	Neuron n(weightTable, errorTable, outputTable, Node_, layer);
+	n.doBackwardPass(nodeNum, false, 0);
+
+	/*
 	int input_node = 0;
 	float_data_type calculatedValue = (*outputTable)[layer][nodeNum];
 	float_data_type errorV = 0.0;
@@ -388,12 +392,17 @@ void Ann::calculateErrorAt(int layer, int nodeNum){
 	(*errorTable)[layer][nodeNum] = getSigmoidError(calculatedValue , errorV);
 
 	//error[layer][nodeNum] = getRectifierError(errorV);
+
+	 */
 }
 
 void Ann::calculateErrorAtOutputLayer(int layer, int nodeNum, float_data_type outputLayerValue){
 
-	float_data_type calculatedValue = (*outputTable)[layer][nodeNum];
-	(*errorTable)[layer][nodeNum] =  getSigmoidError(calculatedValue, outputLayerValue - calculatedValue );
+	Neuron n(weightTable, errorTable, outputTable, Node_, layer);
+	n.doBackwardPass(nodeNum, true, outputLayerValue);
+
+	//float_data_type calculatedValue = (*outputTable)[layer][nodeNum];
+	//(*errorTable)[layer][nodeNum] =  getSigmoidError(calculatedValue, outputLayerValue - calculatedValue );
 }
 
 void Ann::updateErrorsInBackwardPass(){
