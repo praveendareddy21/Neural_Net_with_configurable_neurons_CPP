@@ -31,15 +31,15 @@ public:
 	void doForwardPass(int nodeNum);
 	void doBackwardPass(int nodeNum, bool isOuputLayer, float_data_type OutputValue);
 	
-	/*
-	virtual void processInput();
-	virtual void applyActivation();
-	virtual void updateOutput();
 
-	virtual void processError();
-	virtual void applyActivationError();
-	virtual void updateError();
-	*/
+	virtual float_data_type processInput(int nodeNum);
+	virtual float_data_type applyActivation(float_data_type in);
+	virtual void updateOutput(int nodeNum, float_data_type activated);
+
+	virtual float_data_type processError(int nodeNum, bool isOuputLayer, float_data_type OutputValue);
+	virtual float_data_type applyActivationError(float_data_type out, float_data_type error);
+	virtual void updateError(int nodeNum, float_data_type activated_error);
+
 };
 
 #endif /* NEURON_H_ */
