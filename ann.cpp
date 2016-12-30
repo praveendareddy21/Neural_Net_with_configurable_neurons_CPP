@@ -278,7 +278,7 @@ void Ann::initweight_Table(char * filename){
 				wt = (float_data_type) irand / 100.0;
 				//cout<<"rand wt : "<<wt;
 				//inFile>>z;
-				(*weightTable)[node[j][i]][node[j+1][k]] = ( (float_data_type) irand / 100.0 );// z;
+				(*weightTable)[(*Node_)[j][i]][(*Node_)[j+1][k]] = ( (float_data_type) irand / 100.0 );// z;
 				//cout<<"setting (*weightTable) ["<<node[j][i]<<"]["<<node[j+1][k]<<"] as : "<< (*weightTable)[node[j][i]][node[j+1][k]] <<endl;//(*weightTable)[node[j][i]][node[j+1][k]]<<endl;
 			}
 		}
@@ -287,7 +287,7 @@ void Ann::initweight_Table(char * filename){
 	for(int j=1; j<structure.size();j++){
 		for(int i=0;i<structure[j];i++){
 			//cout<<"initializing (*weightTable) ["<<0<<"]["<<node[j][i]<<"] as : "<<0.01<<endl;
-			(*weightTable)[0][node[j][i]] = 0.01;  // weights from dummy to all nodes is 0.01
+			(*weightTable)[0][(*Node_)[j][i]] = 0.01;  // weights from dummy to all nodes is 0.01
 		}
 	}
 }
@@ -334,6 +334,8 @@ void Ann::initError(){
 
 void Ann::initNode(){
 
+	Node_ = new vector<vector<int> > ();
+
 	std::vector<std::vector< int> > out;
 	std::vector <int > :: iterator struct_iter;
 	int nodenum=1;
@@ -343,23 +345,27 @@ void Ann::initNode(){
 			temp.push_back(nodenum);
 			nodenum++;
 		}
-		out.push_back(temp);
+		(*Node_).push_back(temp);
 	}
-	node = out;
+	//(*Node_) = out;
 }
 
 void Ann::calculateValueAt(int layer, int nodeNum){
 
-	float_data_type value = (*weightTable)[0][node[layer][nodeNum]];
+	Neuron n(weightTable, errorTable, outputTable, Node_, layer);
+	n.doForwardPass(nodeNum);
+	/*
+	float_data_type value = (*weightTable)[0][(*Node_)[layer][nodeNum]];
 	int input_node = 0;
 
 	for(int i=0;i < (*outputTable)[layer-1].size();i++ ){
-		input_node = node[layer-1][i];
-		value += (*outputTable)[layer-1][i]* (*weightTable)[input_node][node[layer][nodeNum]];
+		input_node = (*Node_)[layer-1][i];
+		value += (*outputTable)[layer-1][i]* (*weightTable)[input_node][(*Node_)[layer][nodeNum]];
 	}
 
 
 	(*outputTable)[layer][nodeNum] = getSigmoid(value);
+	*/
 	//output[layer][nodeNum] = getFSigmoid(value);
 
 	//output[layer][nodeNum] = getRectifier(value);
@@ -373,10 +379,10 @@ void Ann::calculateErrorAt(int layer, int nodeNum){
 
 	for(int i=0;i < (*outputTable)[layer+1].size();i++ ){
 		//matError.set(0,i, error[layer+1][i]);
-		input_node = node[layer][nodeNum];
+		input_node = (*Node_)[layer][nodeNum];
 
 
-		errorV += (*errorTable)[layer+1][i] *  (*weightTable)[input_node][node[layer+1][i]];
+		errorV += (*errorTable)[layer+1][i] *  (*weightTable)[input_node][(*Node_)[layer+1][i]];
 	}
 
 	(*errorTable)[layer][nodeNum] = getSigmoidError(calculatedValue , errorV);
@@ -417,7 +423,7 @@ void Ann::updateWeights(){
 		for(int i=0;i<structure[j];i++){
 
 			//cout<<"current node : "<<node[j][i]<<endl;
-			(*weightTable)[0][node[j][i]] =  (*weightTable)[0][node[j][i]] + alpha * 1 * (*errorTable)[j][i] ;
+			(*weightTable)[0][(*Node_)[j][i]] =  (*weightTable)[0][(*Node_)[j][i]] + alpha * 1 * (*errorTable)[j][i] ;
 			//cout<<"setting  ["<<0<<"]["<<node[j][i]<<"] as : "<<(*weightTable)[0][node[j][i]]<<endl;
 		}
 	}
@@ -428,7 +434,7 @@ void Ann::updateWeights(){
 
 			for(int k=0; k< structure[j+1]; k++){
 
-				(*weightTable)[node[j][i]][node[j+1][k]] =  (*weightTable)[node[j][i]][node[j+1][k]] + alpha * (*outputTable)[j][i] * (*errorTable)[j+1][k] ;
+				(*weightTable)[(*Node_)[j][i]][(*Node_)[j+1][k]] =  (*weightTable)[(*Node_)[j][i]][(*Node_)[j+1][k]] + alpha * (*outputTable)[j][i] * (*errorTable)[j+1][k] ;
 
 				//cout<<"setting  ["<<node[j][i]<<"]["<<node[j+1][k]<<"] as : "<<(*weightTable)[node[j][i]][node[j+1][k]]<<endl;
 			}
@@ -623,9 +629,9 @@ void Ann::showError(){
 
 void Ann::showNode(){
 	std::cout<<"Node matrix"<<std::endl;
-	for(unsigned i=0;i<node.size();i++){
-		for(unsigned j=0;j<node[i].size();j++){
-			std::cout<<node[i][j]<<" ";
+	for(unsigned i=0;i<(*Node_).size();i++){
+		for(unsigned j=0;j<(*Node_)[i].size();j++){
+			std::cout<<(*Node_)[i][j]<<" ";
 		}
 		std::cout<<std::endl;
 	}

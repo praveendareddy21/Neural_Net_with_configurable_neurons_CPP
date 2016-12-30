@@ -17,16 +17,21 @@
 using namespace std;
 class Neuron{
 public:
-	vector<vector< float_data_type> > &weightTable;
-	vector<vector< float_data_type> > &error;
-	vector<vector< float_data_type> > &output;
+	vector<vector< float_data_type> > * weightTable;
+	vector<vector< float_data_type> > * error;
+	vector<vector< float_data_type> > * output;
+	std::vector<std::vector< int> > *Node_;
+	int layer;
 
-	Neuron(vector<vector< float_data_type> > &w , vector<vector< float_data_type> > &e,
-	 vector<vector< float_data_type> > &o );
+	Neuron();
+	Neuron(vector<vector< float_data_type> > *w , vector<vector< float_data_type> > *e,
+	 vector<vector< float_data_type> > *o , vector<vector< int> > *n , int l);
 	
+
 	void doForwardPass(int nodeNum);
-	void doBackwardPass(int nodeNum, boolean isOuputLayer, float_data_type OutputValue);
+	void doBackwardPass(int nodeNum, bool isOuputLayer, float_data_type OutputValue);
 	
+	/*
 	virtual void processInput();
 	virtual void applyActivation();
 	virtual void updateOutput();
@@ -34,6 +39,7 @@ public:
 	virtual void processError();
 	virtual void applyActivationError();
 	virtual void updateError();
+	*/
 };
 
 #endif /* NEURON_H_ */

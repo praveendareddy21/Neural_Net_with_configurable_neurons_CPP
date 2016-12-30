@@ -16,8 +16,8 @@ main driver function
 #include<stdlib.h>
 #include"ann.h"
 #include"sigmoid_ann.h"
-#include"relu_ann.h"
-#include"inv_square.h"
+//#include"relu_ann.h"
+//#include"inv_square.h"
 
 using namespace std;
 
@@ -27,7 +27,7 @@ using namespace std;
  int main(int argc, char* argv[]){
 
 
-	 Relu_Ann a;
+	 Ann a;
 
 
 	 cout<<endl<<"out in main at the end"<<endl;

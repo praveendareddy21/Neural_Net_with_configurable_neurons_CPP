@@ -17,6 +17,7 @@
 #include<fstream>
 #include<stdio.h>
 #include<time.h>
+#include"neuron.h"
 using namespace std;
 
 
@@ -27,7 +28,7 @@ public:
 	std::vector< std::vector<float_data_type> > *weightTable;
 	std::vector<std::vector<float_data_type> > *outputTable;
 	std::vector<std::vector<float_data_type> > *errorTable;
-	std::vector<std::vector< int> > node;
+	std::vector<std::vector< int> > *Node_;
 
 
 
