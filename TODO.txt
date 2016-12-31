@@ -1,0 +1,3 @@
+ better interface for alpha
+ and random weight 
+  looking for relationship between range of activation function vs random weight 
