@@ -1,3 +1,24 @@
  better interface for alpha
  and random weight 
   looking for relationship between range of activation function vs random weight 
+  
+  High Level Goals::
+
+
+performance load testing put a outer foor loop
+
+noting down accuracy, ( implement way to calcuare error in  testing data ), storing general weights ( helps in determining local minima vs global minima)
+
+
+I need to really get in there and tweak the digits disappearing  entirely sometimes.
+
+
+bigger application 
+
+ python multiple procceser to fork several instances ( using all those 8  logical cores )  
+
+ perhaps in ubuntu may be ( needs to be installed )
+
+
+
+Need to collect all the data i can from this
