@@ -31,6 +31,9 @@ public:
 	std::vector<std::vector< int> > *Node_;
 
 
+	std::vector< Neuron> neuronList;
+	std::vector< NeuronTypeEnum> neuronEnumList;
+
 
 	std::vector< std::vector<float_data_type> > train_inputTable;
 	std::vector< std::vector<float_data_type> > test_inputTable;
@@ -58,6 +61,7 @@ public:
 	void initOutput();
 	void initError();
 	void initNode();
+	void initNeuronList();
 	void initDigitEncoding();
 	void initTrainInput(char *);
 	void initTrainOutput(char *);

@@ -105,6 +105,7 @@ void Ann::initStructure(char * filename){
 			break;
 		//cout<<" :"<<z<<endl;
 		structure.push_back(z);
+		neuronEnumList.push_back(SIGMOID);
 		}
 
 
@@ -350,10 +351,33 @@ void Ann::initNode(){
 	//(*Node_) = out;
 }
 
+void Ann::initNeuronList(){
+
+	Neuron temp;
+	int layer = 0;
+	std::vector<std::vector< int> > out;
+	std::vector <NeuronTypeEnum > :: iterator struct_iter;
+	for(struct_iter=neuronEnumList.begin();struct_iter!=neuronEnumList.end();struct_iter++){
+		if(*struct_iter == SIGMOID){
+			temp = SigmoidNeuron(weightTable, errorTable, outputTable, Node_, layer);
+		}
+		else if(*struct_iter == INVSQUARE){
+			temp = SigmoidNeuron(weightTable, errorTable, outputTable, Node_, layer);
+		}
+
+
+
+		neuronList.push_back(temp);
+		layer++;
+	}
+}
+
 void Ann::calculateValueAt(int layer, int nodeNum){
 
-	SigmoidNeuron n(weightTable, errorTable, outputTable, Node_, layer);
-	n.doForwardPass(nodeNum);
+	neuronList[layer].doForwardPass(nodeNum);
+
+	//SigmoidNeuron n(weightTable, errorTable, outputTable, Node_, layer);
+	//n.doForwardPass(nodeNum);
 	/*
 	float_data_type value = (*weightTable)[0][(*Node_)[layer][nodeNum]];
 	int input_node = 0;
@@ -373,8 +397,10 @@ void Ann::calculateValueAt(int layer, int nodeNum){
 
 void Ann::calculateErrorAt(int layer, int nodeNum){
 
-	SigmoidNeuron n(weightTable, errorTable, outputTable, Node_, layer);
-	n.doBackwardPass(nodeNum, false, 0);
+	neuronList[layer].doBackwardPass(nodeNum, false, 0);
+
+	//SigmoidNeuron n(weightTable, errorTable, outputTable, Node_, layer);
+	//n.doBackwardPass(nodeNum, false, 0);
 
 	/*
 	int input_node = 0;
@@ -398,8 +424,10 @@ void Ann::calculateErrorAt(int layer, int nodeNum){
 
 void Ann::calculateErrorAtOutputLayer(int layer, int nodeNum, float_data_type outputLayerValue){
 
-	SigmoidNeuron n(weightTable, errorTable, outputTable, Node_, layer);
-	n.doBackwardPass(nodeNum, true, outputLayerValue);
+	neuronList[layer].doBackwardPass(nodeNum, true, outputLayerValue);
+
+	//SigmoidNeuron n(weightTable, errorTable, outputTable, Node_, layer);
+	//n.doBackwardPass(nodeNum, true, outputLayerValue);
 
 	//float_data_type calculatedValue = (*outputTable)[layer][nodeNum];
 	//(*errorTable)[layer][nodeNum] =  getSigmoidError(calculatedValue, outputLayerValue - calculatedValue );
@@ -526,7 +554,7 @@ Ann::Ann(){
 	initTestInput("test_input.txt");
 	initTestOutput("test_output.txt");
 	initweight_Table("weights.txt");
-
+	initNeuronList();
 
 	cout<<"Sizes : "<<train_inputTable.size()<<" : "<<train_output.size() <<" : "<< test_inputTable.size() <<" : "<<test_output.size()<<endl;
 
@@ -607,6 +635,8 @@ Ann::Ann(  char * train_input_file, char *train_output_file, char * test_input_f
 	initTestInput("test-input.txt");
 	initTestOutput("test-output.txt");
 	initweight_Table("weights.txt");
+
+	initNeuronList();
 
 }
 

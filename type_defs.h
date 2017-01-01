@@ -10,4 +10,6 @@
 
 typedef double float_data_type;
 
+typedef enum NeuronTypeEnum {SIGMOID, INVSQUARE}NeuronTypeEnum ;
+
 #endif /* TYPE_DEFS_H_ */
