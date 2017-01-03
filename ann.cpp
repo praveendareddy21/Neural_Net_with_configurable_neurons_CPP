@@ -105,7 +105,7 @@ void Ann::initStructure(char * filename){
 			break;
 		//cout<<" :"<<z<<endl;
 		structure.push_back(z);
-		neuronEnumList.push_back(SIGMOID);
+		neuronEnumList.push_back(INVSQUARE);
 		}
 
 
@@ -361,7 +361,7 @@ void Ann::initNeuronList(){
 			temp = SigmoidNeuron(weightTable, errorTable, outputTable, Node_, layer);
 		}
 		else if(*struct_iter == INVSQUARE){
-			temp = SigmoidNeuron(weightTable, errorTable, outputTable, Node_, layer);
+			temp = InvSquareNeuron(weightTable, errorTable, outputTable, Node_, layer);
 		}
 
 
