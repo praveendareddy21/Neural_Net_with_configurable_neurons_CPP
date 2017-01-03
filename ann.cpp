@@ -348,7 +348,6 @@ void Ann::initNode(){
 		}
 		(*Node_).push_back(temp);
 	}
-	//(*Node_) = out;
 }
 
 void Ann::initNeuronList(){
@@ -506,10 +505,14 @@ void Ann::validateTestInput(){
 	for(int i=0;i<total_tests;i++){
 		doForwardPassIteration(test_inputTable,i);
 		digit = findDigit();
-		cout<<"digit : "<<digit<<endl;
 
+		cout<<digit<<" : ";
 		if(digit == test_output[i]){
 			correctly_validated++;
+			cout<<"T"<<endl;
+		}
+		else{
+			cout<<"F"<<endl;
 		}
 	}
 	accuracy = ((float_data_type) correctly_validated  )/ total_tests;
@@ -526,18 +529,15 @@ void Ann::trainWeightsModel(int iteration_count){
 
 		for(int i=0;i<train_inputTable.size();i++){
 			doForwardPassIteration(train_inputTable,i);
-			//showOutput();
 			doBackwardPassIteration(train_output,i);
-			//showError();
 			updateWeights();
-			//showWeight();
+
 		}
 	}
 
 }
 
 Ann::Ann(){
-
 
 	alpha= 0.01;
 	initStructure("structure.txt");
@@ -558,61 +558,10 @@ Ann::Ann(){
 
 	cout<<"Sizes : "<<train_inputTable.size()<<" : "<<train_output.size() <<" : "<< test_inputTable.size() <<" : "<<test_output.size()<<endl;
 
-
-
-
-
-
 	trainWeightsModel(500);
 	validateTestInput();
 
-
-
-	/*
-
-	updateValuesInForwardPass();
-
-
-	cout<<"#######################################"<<endl;
-
-
-	updateErrorsInBackwardPass();
-
-	showError();
-
-
-	cout << showpoint << fixed << setprecision(12) << error[0][0] << endl;
-	cout << showpoint << fixed << setprecision(12) << error[0][1] << endl;
-
-	updateWeights();
-	*/
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

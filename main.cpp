@@ -19,6 +19,8 @@ main driver function
 //#include"relu_ann.h"
 //#include"inv_square.h"
 
+
+
 using namespace std;
 
 
@@ -28,9 +30,9 @@ using namespace std;
 
 
 	 Ann a;
-
-
 	 cout<<endl<<"out in main at the end"<<endl;
+
+
 
 	 return 0;
 }
