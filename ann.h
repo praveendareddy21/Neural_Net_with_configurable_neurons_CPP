@@ -86,6 +86,8 @@ public:
 
 	void trainWeightsModel(int);
 	void validateTestInput();
+	void validateTestInputToFile(ostream &f);
+
 
 	void showOutput();
 	void showError();

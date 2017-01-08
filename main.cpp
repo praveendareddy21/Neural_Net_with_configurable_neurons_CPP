@@ -15,9 +15,6 @@ main driver function
 #include<fstream>
 #include<stdlib.h>
 #include"ann.h"
-//#include"sigmoid_ann.h"
-//#include"relu_ann.h"
-//#include"inv_square.h"
 
 
 
@@ -29,10 +26,26 @@ using namespace std;
  int main(int argc, char* argv[]){
 
 
-	 Ann a;
-	 cout<<endl<<"out in main at the end"<<endl;
+
+	 //Ann a;
+	 //cout<<endl<<"out in main at the end"<<endl;
+
+	 //return 0;
+
+	 filebuf fb;
+	 fb.open("acc_out.txt", ios::out);
+	 ostream os(&fb);
+
+	 //fstream f("acc_out.txt", ios::out);
+	 //fstream f1;
+	 for (int i=0; i < 5 ; i ++){
+		 Ann b;// other constructor
 
 
+		 b.trainWeightsModel(500);
+		 b.validateTestInputToFile(os);
+
+	 }
 
 	 return 0;
 }

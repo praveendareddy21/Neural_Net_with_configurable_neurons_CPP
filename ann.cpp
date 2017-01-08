@@ -527,6 +527,34 @@ void Ann::validateTestInput(){
 
 }
 
+void Ann::validateTestInputToFile(ostream &f){
+
+	int total_tests = test_inputTable.size(), digit = -1;
+	int correctly_validated = 0;
+	float_data_type accuracy = 0.0;
+	for(int i=0;i<total_tests;i++){
+		doForwardPassIteration(test_inputTable,i);
+		digit = findDigit();
+
+		f<<digit<<"|";
+		if(digit == test_output[i]){
+			correctly_validated++;
+			f<<"T;";
+		}
+		else{
+			f<<"F;";
+		}
+
+	}
+	f<<endl;
+	accuracy = ((float_data_type) correctly_validated  )/ total_tests;
+
+	//f<<"total : "<<total_tests<<" validated : "<<correctly_validated<<endl;
+	f<<"accuracy|";
+	f << showpoint << fixed << setprecision(12) << accuracy << endl;
+
+}
+
 void Ann::trainWeightsModel(int iteration_count){
 
 	for(int j=0;j<iteration_count;j++){
@@ -590,6 +618,7 @@ Ann::Ann(  char * train_input_file, char *train_output_file, char * test_input_f
 	initweight_Table("weights.txt");
 
 	initNeuronList();
+	cout<<"Sizes : "<<train_inputTable.size()<<" : "<<train_output.size() <<" : "<< test_inputTable.size() <<" : "<<test_output.size()<<endl;
 
 }
 
