@@ -92,7 +92,7 @@ float_data_type Ann::getRectifierError(float_data_type in){
 
 void Ann::initStructure(char * filename){
 	fstream inFile;   // input file
-	int z;
+	int z, neurontype;
 
 	inFile.open(filename);
 	if (!inFile)
@@ -100,12 +100,16 @@ void Ann::initStructure(char * filename){
 	   cout << "The input file could not be opened."<<endl;
 	}
 	while(true){
-		inFile>>z;
+		inFile>>z>>neurontype;
 		if(inFile.eof())
 			break;
 		//cout<<" :"<<z<<endl;
 		structure.push_back(z);
-		neuronEnumList.push_back(INVSQUARE);
+
+		if (neurontype == 0){
+			neuronEnumList.push_back(SIGMOID);
+		}else if (neurontype == 1)
+			neuronEnumList.push_back(INVSQUARE);
 		}
 
 

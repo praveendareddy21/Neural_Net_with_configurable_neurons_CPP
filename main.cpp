@@ -15,7 +15,7 @@ main driver function
 #include<fstream>
 #include<stdlib.h>
 #include"ann.h"
-#include"sigmoid_ann.h"
+//#include"sigmoid_ann.h"
 //#include"relu_ann.h"
 //#include"inv_square.h"
 
