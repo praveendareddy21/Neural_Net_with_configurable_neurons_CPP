@@ -36,16 +36,13 @@ using namespace std;
 	 fb.open("acc_out.txt", ios::out);
 	 ostream os(&fb);
 
-	 //fstream f("acc_out.txt", ios::out);
-	 //fstream f1;
 	 for (int i=0; i < 5 ; i ++){
 		 Ann b;// other constructor
-
-
 		 b.trainWeightsModel(500);
 		 b.validateTestInputToFile(os);
 
 	 }
+	 fb.close();
 
 	 return 0;
 }
