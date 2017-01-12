@@ -598,7 +598,13 @@ Ann::Ann(){
 
 
 
+Ann::~Ann(){
+	delete weightTable;
+	delete outputTable;
+	delete errorTable;
+	delete Node_;
 
+}
 
 Ann::Ann(  char * train_input_file, char *train_output_file, char * test_input_file, char *test_output_file,
 		char * structure_file, char * weight_file){

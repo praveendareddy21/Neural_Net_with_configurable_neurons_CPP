@@ -83,6 +83,7 @@ public:
 
 	Ann();
 	Ann( char *, char *, char *, char *, char *, char *);
+	~Ann();
 
 	void trainWeightsModel(int);
 	void validateTestInput();
