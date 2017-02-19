@@ -68,6 +68,19 @@ public:
 
 };
 
+class GatedSigmodNeuron: public Neuron{
+public:
+	GatedSigmodNeuron(vector<vector< float_data_type> > *w , vector<vector< float_data_type> > *e,
+	 vector<vector< float_data_type> > *o , vector<vector< int> > *n , int l);
+
+	virtual float_data_type applyActivation(float_data_type in);
+	virtual float_data_type applyActivationError(float_data_type out, float_data_type error);
+
+};
+
+
+
+
 
 
 #endif /* NEURON_H_ */
