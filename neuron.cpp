@@ -39,7 +39,7 @@ void Neuron::doForwardPass(int nodeNum){
 	updateOutput(nodeNum, activated_value);
 
 }
-		
+
 void Neuron::doBackwardPass(int nodeNum, bool isOuputLayer, float_data_type OutputValue){
 
 	float_data_type error_value = processError(nodeNum, isOuputLayer, OutputValue  );
@@ -102,23 +102,4 @@ void Neuron::updateError(int nodeNum, float_data_type activated_error){
 SigmoidNeuron::SigmoidNeuron(vector<vector< float_data_type> > *w , vector<vector< float_data_type> > *e,
 		 vector<vector< float_data_type> > *o , vector<vector< int> > *n , int l): Neuron(w, e, o, n, l){
 
-}
-
-InvSquareNeuron::InvSquareNeuron(vector<vector< float_data_type> > *w , vector<vector< float_data_type> > *e,
-		 vector<vector< float_data_type> > *o , vector<vector< int> > *n , int l): Neuron(w, e, o, n, l){
-
-}
-
-float_data_type InvSquareNeuron::applyActivation(float_data_type in){
-	float_data_type exp_value;
-	float_data_type return_value;
-	return_value = ((float_data_type)1) / (1 + (in * in));
-	 return return_value;
-}
-
-float_data_type InvSquareNeuron::applyActivationError(float_data_type out, float_data_type error){
-	float_data_type a ,b, c;
-	a = 2* error;
-	b = (error*error +1) * (error * error +1);
-	return a/b;
 }
